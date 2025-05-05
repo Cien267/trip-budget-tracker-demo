@@ -1,0 +1,202 @@
+{
+  "name": "Sai Gon Trip",
+  "description": "a 3 day trip to Sai Gon to explore a morden city",
+  "date": {
+    "from": "2025-05-07T17:00:00.000Z",
+    "to": "2025-05-10T17:00:00.000Z"
+  },
+  "participants": "4",
+  "status": "inprogress",
+  "id": "9dd47ce0-b104-404c-bb32-b2c0307a2222",
+  "expenses": [
+    {
+      "paymentMethod": "card",
+      "amount": "1400000",
+      "category": "accommodation",
+      "date": "2025-05-07T17:00:00.000Z",
+      "note": "homestay rental 700k per night, 1km from walking street",
+      "paymentBy": "Huy",
+      "id": "3cca200a-1acf-4a1b-bd85-b8ac1ece8f7a"
+    },
+    {
+      "paymentMethod": "card",
+      "amount": "7216000",
+      "category": "transportation",
+      "date": "2025-05-07T17:00:00.000Z",
+      "note": "Round-trip flight ticket",
+      "paymentBy": "Kien",
+      "id": "79b9dc70-ce6e-4cae-9d36-00cb34f9faa5"
+    },
+    {
+      "paymentMethod": "digital-wallet",
+      "amount": "240000",
+      "category": "transportation",
+      "date": "2025-05-07T17:00:00.000Z",
+      "note": "airport taxi",
+      "paymentBy": "Kien",
+      "id": "d72df64a-c0fa-42f9-9751-f6b225f2fc9b"
+    },
+    {
+      "paymentMethod": "digital-wallet",
+      "amount": "300000",
+      "category": "transportation",
+      "date": "2025-05-08T17:00:00.000Z",
+      "note": "Tan Son Nhat Airport taxi",
+      "paymentBy": "Duy",
+      "id": "5f86c534-00d3-47c2-a395-ab5a1e7eaf3a"
+    },
+    {
+      "paymentMethod": "cash",
+      "amount": "200000",
+      "category": "food",
+      "date": "2025-05-08T17:00:00.000Z",
+      "note": "Have Hu Tieu Go for breakfast",
+      "paymentBy": "Ngoc",
+      "id": "29a88c9d-0e8b-4b7c-8ecb-c96ffba7d7ba"
+    },
+    {
+      "paymentMethod": "cash",
+      "amount": "260000",
+      "category": "activities",
+      "date": "2025-05-08T17:00:00.000Z",
+      "note": "Entry ticket to the Independence Palace",
+      "paymentBy": "Kien",
+      "id": "006b2d94-808a-495f-b4be-8ece22cf3ba5"
+    },
+    {
+      "paymentMethod": "card",
+      "amount": "280000",
+      "category": "food",
+      "date": "2025-05-08T17:00:00.000Z",
+      "note": "Have Com Tam for Lunch",
+      "paymentBy": "Duy",
+      "id": "ec22b5a9-1e6e-46d8-bc49-15edfda62c74"
+    },
+    {
+      "paymentMethod": "cash",
+      "amount": "60000",
+      "category": "food",
+      "date": "2025-05-08T17:00:00.000Z",
+      "note": "Have sweet soup at Ben Thanh Market",
+      "paymentBy": "Duy",
+      "id": "87112ed2-21ab-4f7a-a847-a97a99c37cf2"
+    },
+    {
+      "paymentMethod": "cash",
+      "amount": "40000",
+      "category": "services",
+      "date": "2025-05-08T17:00:00.000Z",
+      "note": "parking fee on Nguyen Hue street",
+      "paymentBy": "Ngoc",
+      "id": "08d92970-f371-4889-a39c-f833b66eb769"
+    },
+    {
+      "paymentMethod": "digital-wallet",
+      "amount": "280000",
+      "category": "food",
+      "date": "2025-05-08T17:00:00.000Z",
+      "note": "Have Hu Tieu Xao for dinner",
+      "paymentBy": "Duy",
+      "id": "25dff62e-eef9-4952-b71a-3673a855cc43"
+    },
+    {
+      "paymentMethod": "card",
+      "amount": "320000",
+      "category": "food",
+      "date": "2025-05-09T17:00:00.000Z",
+      "note": "Have Hu Tieu  Nam Vang for breakfast",
+      "paymentBy": "Kien",
+      "id": "8baf6408-7ce9-4e43-a29f-162ce69feeac"
+    },
+    {
+      "paymentMethod": "cash",
+      "amount": "40000",
+      "category": "services",
+      "date": "2025-05-09T17:00:00.000Z",
+      "note": "Parking ticket",
+      "paymentBy": "Ngoc",
+      "id": "e085b978-f899-4aca-96d1-af94839af18a"
+    },
+    {
+      "paymentMethod": "card",
+      "amount": "280000",
+      "category": "food",
+      "date": "2025-05-09T17:00:00.000Z",
+      "note": "Have Banh My Huynh Hoa for lunch",
+      "paymentBy": "Huy",
+      "id": "b739c9a8-659e-41b3-8394-7e847a293e46"
+    },
+    {
+      "paymentMethod": "digital-wallet",
+      "amount": "60000",
+      "category": "transportation",
+      "date": "2025-05-09T17:00:00.000Z",
+      "note": "Saigon Water Bus ticket price",
+      "paymentBy": "Huy",
+      "id": "0e2da0d6-305f-4a94-b474-371b00caa5e5"
+    },
+    {
+      "paymentMethod": "card",
+      "amount": "60000",
+      "category": "transportation",
+      "date": "2025-05-09T17:00:00.000Z",
+      "note": "Metro",
+      "paymentBy": "Huy",
+      "id": "f2e8ed69-9dc5-4276-8b0f-259acf18736b"
+    },
+    {
+      "paymentMethod": "card",
+      "amount": "800000",
+      "category": "food",
+      "date": "2025-05-09T17:00:00.000Z",
+      "note": "Hot pot",
+      "paymentBy": "Kien",
+      "id": "b8ae4100-bf1c-473a-ae27-6a3f57a649de"
+    },
+    {
+      "paymentMethod": "cash",
+      "amount": "80000",
+      "category": "activities",
+      "date": "2025-05-10T17:00:00.000Z",
+      "note": "Ben Nha Rong ticket price",
+      "paymentBy": "Duy",
+      "id": "cc6c833a-3e13-4016-9c1d-10974af8ced3"
+    },
+    {
+      "paymentMethod": "card",
+      "amount": "200000",
+      "category": "food",
+      "date": "2025-05-10T17:00:00.000Z",
+      "note": "Have Pha Lau for lunch",
+      "paymentBy": "Huy",
+      "id": "f40ec368-07c0-438e-86a0-1385954e0b3e"
+    },
+    {
+      "paymentMethod": "cash",
+      "amount": "200000",
+      "category": "food",
+      "date": "2025-05-10T17:00:00.000Z",
+      "note": "Have Bun Mam Mien Tay for dinner",
+      "paymentBy": "Kien",
+      "id": "345a461b-9baa-41d8-b399-b2c09895346f"
+    },
+    {
+      "paymentMethod": "cash",
+      "amount": "200000",
+      "category": "shopping",
+      "date": "2025-05-10T17:00:00.000Z",
+      "note": "Banh Trang as gifts",
+      "paymentBy": "Kien",
+      "id": "6caf5841-ca67-4445-a525-4c5ab7ae9dcf"
+    },
+    {
+      "paymentMethod": "other",
+      "amount": "100000",
+      "category": "food",
+      "date": "2025-05-07T17:00:00.000Z",
+      "note": "Quick dinner",
+      "paymentBy": "Ngoc",
+      "id": "e9ba6213-d1b0-44ce-9be2-d94c7281f33a"
+    }
+  ]
+}

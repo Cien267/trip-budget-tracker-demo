@@ -43,7 +43,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { EXPENSE_CATEGORIES } from "@/constants";
+import { EXPENSE_CATEGORIES, PAYMENT_METHODS } from "@/constants";
 import { useParams } from "react-router";
 
 function Header() {
@@ -187,12 +187,13 @@ function Body() {
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent position="popper">
-                            <SelectItem value="cash">Cash</SelectItem>
-                            <SelectItem value="card">Card</SelectItem>
-                            <SelectItem value="digital-wallet">
-                              Digital Wallet
-                            </SelectItem>
-                            <SelectItem value="other">other</SelectItem>
+                            {PAYMENT_METHODS.map((method) => {
+                              return (
+                                <SelectItem value={method.code}>
+                                  {method.name}
+                                </SelectItem>
+                              );
+                            })}
                           </SelectContent>
                         </Select>
                       </FormControl>

@@ -10,9 +10,19 @@ const CATEGORY_CODES = EXPENSE_CATEGORIES.map((category) => category.code) as [
   ...string[],
 ];
 
+const PAYMENT_CODES = PAYMENT_METHODS.map((payment) => payment.code) as [
+  string,
+  ...string[],
+];
+
+const TRIP_STATUS_CODES = TRIP_STATUSES.map((status) => status.code) as [
+  string,
+  ...string[],
+];
+
 export const expenseFormSchema = z.object({
   id: z.string().optional(),
-  paymentMethod: z.enum(PAYMENT_METHODS),
+  paymentMethod: z.enum(PAYMENT_CODES),
   amount: z.string().min(1, "Amount is required"),
   category: z.enum(CATEGORY_CODES, {
     message: "Please select a valid category",
@@ -30,8 +40,14 @@ export const tripFormSchema = z.object({
   description: z.string().max(300),
   date: z.object({ from: z.date().optional(), to: z.date().optional() }),
   participants: z.string(),
-  status: z.enum(TRIP_STATUSES).optional(),
+  status: z.enum(TRIP_STATUS_CODES).optional(),
   expenses: z.array(expenseFormSchema).optional(),
 });
 
 export type TripFormType = z.infer<typeof tripFormSchema>;
+
+export type GroupedExpense = {
+  items: ExpenseFormType[];
+  totalAmount: number;
+  totalLogs: number;
+};

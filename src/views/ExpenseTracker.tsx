@@ -14,6 +14,7 @@ import { useParams } from "react-router";
 import { Button } from "@/components/ui/button";
 import { formatVND } from "@/utils";
 import ExpensesSummary from "@/components/expenses/ExpensesSummary";
+import ExpensesList from "@/components/expenses/list/ExpensesList";
 
 function Header() {
   return (
@@ -40,13 +41,9 @@ function TabsSwitcher({
       name: "Analytics",
       code: "analytics-tab",
     },
-    {
-      name: "Trip Details",
-      code: "trip-details-tab",
-    },
   ];
   return (
-    <div className="w-full flex items-center justify-center p-8">
+    <div className="w-full flex items-center justify-center p-8 pb-0">
       <ul className="flex gap-2 w-max bg-white p-1 rounded-full shadow-[0_2px_8px_-1px_rgba(6,81,237,0.4)]">
         {tabs.map((tab) => {
           return (
@@ -87,6 +84,11 @@ function Body() {
         activeTab={activeTab}
         changeTab={setActiveTab}
       ></TabsSwitcher>
+      {activeTab === "expense-tab" ? (
+        <ExpensesList currentTrip={currentTrip}></ExpensesList>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
