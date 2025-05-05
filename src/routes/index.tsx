@@ -1,6 +1,8 @@
-import { createBrowserRouter } from "react-router"
-import App from "@/views/App"
-import CreateNewTrip from "@/views/CreateNewTrip"
+import { createBrowserRouter } from "react-router";
+import App from "@/views/App";
+import CreateNewTrip from "@/views/CreateNewTrip";
+import ExpenseTracker from "@/views/ExpenseTracker";
+import CreateExpense from "@/views/CreateExpense";
 
 export const router = createBrowserRouter([
   {
@@ -11,4 +13,12 @@ export const router = createBrowserRouter([
     path: "/create-new-trip",
     Component: CreateNewTrip,
   },
-])
+  {
+    path: "/:tripId/expenses",
+    Component: ExpenseTracker,
+  },
+  {
+    path: "/:tripId/expenses/create",
+    Component: CreateExpense,
+  },
+]);

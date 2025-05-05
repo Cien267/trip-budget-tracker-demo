@@ -1,21 +1,21 @@
-import { ReactNode } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
-import { useNavigate } from "react-router"
+import { ReactNode } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router";
 
 function DefaultLayout({
   header,
   body,
   showBackButton = true,
 }: {
-  header: ReactNode
-  body: ReactNode
-  showBackButton?: boolean
+  header: ReactNode;
+  body: ReactNode;
+  showBackButton?: boolean;
 }) {
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const handleNavigateBack = () => {
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   return (
     <div className="flex flex-col gap-12 items-center justify-start min-h-svh pt-14 relative">
@@ -32,7 +32,7 @@ function DefaultLayout({
       </div>
       {body}
     </div>
-  )
+  );
 }
 
-export default DefaultLayout
+export default DefaultLayout;
