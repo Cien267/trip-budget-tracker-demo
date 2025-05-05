@@ -68,6 +68,7 @@ function Body() {
         from: date?.from,
         to: date?.to,
       };
+      values.expenses = [];
       values.id = uuidv4();
       const dataLocal = JSON.parse(
         localStorage.getItem("trip-budget-tracker") ?? "[]",

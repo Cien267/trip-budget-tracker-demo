@@ -11,7 +11,6 @@ import {
   faUser,
   faCalendarDays,
   faNoteSticky,
-  faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
@@ -34,7 +33,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { v4 as uuidv4 } from "uuid";
-import { ExpenseFormType, expenseFormSchema } from "@/types";
+import { ExpenseFormType, expenseFormSchema, TripFormType } from "@/types";
 import { useNavigate } from "react-router";
 import {
   Select,
@@ -44,6 +43,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { EXPENSE_CATEGORIES } from "@/constants";
+import { useParams } from "react-router";
 
 function Header() {
   return <>New Expense</>;
@@ -51,33 +52,49 @@ function Header() {
 
 function Body() {
   let navigate = useNavigate();
-
+  let params = useParams();
   const [date, setDate] = useState<Date>();
 
-  const form = useForm<z.infer<typeof expenseFormSchema>>({
+  const form = useForm<ExpenseFormType>({
     resolver: zodResolver(expenseFormSchema),
     defaultValues: {
       paymentMethod: "cash",
       amount: "",
-      category: "food",
+      category: "",
       date: undefined,
       note: "",
       paymentBy: "",
     },
   });
 
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const { setValue, trigger } = form;
+  const handleSelectCategory = async (categoryCode: string) => {
+    setSelectedCategory(categoryCode);
+    setValue("category", categoryCode, { shouldValidate: true });
+    await trigger("category");
+  };
+
   const onSubmit = (values: ExpenseFormType) => {
     try {
       values.date = date ? date : new Date();
       values.id = uuidv4();
-      console.log("values", values);
-      // const dataLocal = JSON.parse(
-      //   localStorage.getItem("trip-budget-tracker") ?? "[]",
-      // );
-      // dataLocal.push(values);
-      // localStorage.setItem("trip-budget-tracker", JSON.stringify(dataLocal));
+      const trips = JSON.parse(
+        localStorage.getItem("trip-budget-tracker") ?? "[]",
+      );
+      const index = trips.findIndex(
+        (trip: TripFormType) => trip.id === params.tripId,
+      );
+      if (index !== -1) {
+        if (trips[index].expenses) {
+          trips[index].expenses.push(values);
+        } else {
+          trips[index].expenses = [values];
+        }
+        localStorage.setItem("trip-budget-tracker", JSON.stringify(trips));
+      }
 
-      // navigate(`/${values.id}/expenses`);
+      navigate(`/${params.tripId}/expenses`);
     } catch (e) {
       console.error(e);
     }
@@ -86,7 +103,7 @@ function Body() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <Card>
+        <Card className="mb-12">
           <CardContent className="min-w-lg sm:min-w-2xl md:min-w-4xl lg:min-w-5xl">
             <div className="grid w-full items-center gap-8">
               <div className="flex flex-col space-y-1.5">
@@ -123,10 +140,25 @@ function Body() {
                         />{" "}
                         Category
                       </FormLabel>
-                      <div className="flex flex-wrap justify-between items-center">
-                        <div className="flex justify-center items-center border rounded-lg py-4 px-8 cursor-pointer">
-                          Food
-                        </div>
+                      <div className="flex flex-wrap justify-start items-center gap-4">
+                        {EXPENSE_CATEGORIES.map((item) => {
+                          return (
+                            <div
+                              onClick={() => handleSelectCategory(item.code)}
+                              key={item.code}
+                              className={`flex justify-center items-center flex-col gap-2 border rounded-lg py-4 px-8 cursor-pointer font-semibold hover:shadow-sm min-w-[calc(25%-16px)] ${item.classes} ${selectedCategory === item.code ? item.activeClasses : ""}`}
+                            >
+                              <FontAwesomeIcon
+                                icon={item.icon}
+                                className={item.iconClass}
+                              />
+                              <span>{item.name}</span>
+                              <span className="text-xs text-slate-400 font-light">
+                                {item.description}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                       <FormMessage />
                     </FormItem>
@@ -151,7 +183,7 @@ function Body() {
                           onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
-                          <SelectTrigger id="paymentMethod">
+                          <SelectTrigger id="paymentMethod" className="w-full">
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent position="popper">
@@ -205,7 +237,7 @@ function Body() {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-[240px] justify-start text-left font-normal",
+                        "justify-start text-left font-normal",
                         !date && "text-muted-foreground",
                       )}
                     >

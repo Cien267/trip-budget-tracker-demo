@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router";
@@ -65,7 +64,7 @@ function Body() {
         <div className="flex flex-col justify-center items-center">
           <div className="font-bold text-emerald-600 text-lg">Recent Trips</div>
           <div className="text-xs font-normal text-gray-400">
-            Start planning your next adventure
+            Quick access to your recent trips
           </div>
         </div>
         <div className="flex flex-wrap justify-center items-center gap-4 p-4 rounded-lg max-w-1xl">
@@ -100,7 +99,9 @@ function Body() {
               );
             })
           ) : (
-            <div className="text-stone-400 text-lg">You have no trips</div>
+            <div className="text-stone-400 text-lg">
+              You currently have no trips
+            </div>
           )}
         </div>
       </div>
@@ -108,8 +109,6 @@ function Body() {
   );
 }
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <DefaultLayout header={<Header />} body={<Body />} showBackButton={false} />
   );
