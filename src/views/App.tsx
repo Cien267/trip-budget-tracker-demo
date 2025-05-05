@@ -71,7 +71,7 @@ function Body() {
           {trips.length > 0 ? (
             trips.map((trip: TripFormType) => {
               return (
-                <NavLink to={`/${trip.id}/expenses`} end>
+                <NavLink to={`/${trip.id}/expenses`} end key={trip.id}>
                   <div
                     key={trip.id}
                     className="border border-emerald-200 rounded-lg flex justify-between items-start p-4 min-w-md hover:shadow-md hover:bg-emerald-50 transition-all cursor-pointer hover:-translate-y-0.5"
