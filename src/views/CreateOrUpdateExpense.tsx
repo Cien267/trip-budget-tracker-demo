@@ -45,29 +45,90 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { EXPENSE_CATEGORIES, PAYMENT_METHODS } from "@/constants";
 import { useParams } from "react-router";
+import { useMemo, useEffect } from "react";
 
 function Header() {
   return <>New Expense</>;
 }
 
 function Body() {
-  let navigate = useNavigate();
-  let params = useParams();
   const [date, setDate] = useState<Date>();
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  let navigate = useNavigate();
+
+  let params = useParams();
+  const tripId = params.tripId ?? null;
+  const expenseId = params.expenseId ?? null;
+
+  const trips = useMemo(() => {
+    try {
+      return JSON.parse(
+        localStorage.getItem("trip-budget-tracker") ?? "[]",
+      ) as TripFormType[];
+    } catch {
+      return [];
+    }
+  }, []);
+
+  const currentTrip = useMemo(() => {
+    return (
+      trips.find((trip: TripFormType) => trip.id === tripId) || {
+        id: tripId || "",
+        name: "Unknown Trip",
+        description: "",
+        date: { from: undefined, to: undefined },
+        participants: "",
+        status: "unknown",
+        expenses: [],
+      }
+    );
+  }, [trips, tripId]);
+
+  const beingUpdatedExpense = useMemo(() => {
+    if (expenseId && currentTrip.expenses) {
+      return currentTrip.expenses.find(
+        (expense: ExpenseFormType) => expense.id === expenseId,
+      );
+    }
+    return null;
+  }, [expenseId, currentTrip.expenses]);
+
+  useEffect(() => {
+    const newDate = beingUpdatedExpense?.date
+      ? new Date(beingUpdatedExpense.date)
+      : undefined;
+    if (
+      (newDate && !date) ||
+      (!newDate && date) ||
+      (newDate && date && newDate.getTime() !== date.getTime())
+    ) {
+      setDate(newDate);
+    }
+
+    if (beingUpdatedExpense && beingUpdatedExpense.category) {
+      handleSelectCategory(beingUpdatedExpense.category);
+    }
+  }, [beingUpdatedExpense]);
 
   const form = useForm<ExpenseFormType>({
     resolver: zodResolver(expenseFormSchema),
-    defaultValues: {
-      paymentMethod: "cash",
-      amount: "",
-      category: "",
-      date: undefined,
-      note: "",
-      paymentBy: "",
-    },
+    defaultValues: useMemo(
+      () => ({
+        id: beingUpdatedExpense?.id || uuidv4(),
+        paymentMethod: beingUpdatedExpense?.paymentMethod || "cash",
+        amount: beingUpdatedExpense?.amount || "",
+        category: beingUpdatedExpense?.category || "",
+        date: beingUpdatedExpense?.date
+          ? new Date(beingUpdatedExpense.date)
+          : undefined,
+        note: beingUpdatedExpense?.note || "",
+        paymentBy: beingUpdatedExpense?.paymentBy || "",
+      }),
+      [beingUpdatedExpense],
+    ),
   });
 
-  const [selectedCategory, setSelectedCategory] = useState("");
   const { setValue, trigger } = form;
   const handleSelectCategory = async (categoryCode: string) => {
     setSelectedCategory(categoryCode);
@@ -78,16 +139,19 @@ function Body() {
   const onSubmit = (values: ExpenseFormType) => {
     try {
       values.date = date ? date : new Date();
-      values.id = uuidv4();
-      const trips = JSON.parse(
-        localStorage.getItem("trip-budget-tracker") ?? "[]",
-      );
-      const index = trips.findIndex(
-        (trip: TripFormType) => trip.id === params.tripId,
-      );
+
+      const index = trips.findIndex((trip: TripFormType) => trip.id === tripId);
       if (index !== -1) {
         if (trips[index].expenses) {
-          trips[index].expenses.push(values);
+          if (beingUpdatedExpense) {
+            const indexExpense = trips[index].expenses.findIndex(
+              (expense: ExpenseFormType) =>
+                expense.id === beingUpdatedExpense.id,
+            );
+            trips[index].expenses[indexExpense] = values;
+          } else {
+            trips[index].expenses.push(values);
+          }
         } else {
           trips[index].expenses = [values];
         }
@@ -189,7 +253,10 @@ function Body() {
                           <SelectContent position="popper">
                             {PAYMENT_METHODS.map((method) => {
                               return (
-                                <SelectItem value={method.code}>
+                                <SelectItem
+                                  value={method.code}
+                                  key={method.code}
+                                >
                                   {method.name}
                                 </SelectItem>
                               );
@@ -281,16 +348,32 @@ function Body() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button variant="outline">Cancel</Button>
-            <Button type="submit">Create</Button>
+            <Button
+              variant="outline"
+              onClick={() => navigate(`/${tripId}/expenses`)}
+            >
+              Cancel
+            </Button>
+            <Button type="submit">
+              {beingUpdatedExpense ? "Update" : "Create"}
+            </Button>
           </CardFooter>
         </Card>
       </form>
     </Form>
   );
 }
-function CreateNewTrip() {
-  return <DefaultLayout header={<Header />} body={<Body />} />;
+function CreateOrUpdateExpense() {
+  let params = useParams();
+  const tripId = params.tripId ?? null;
+
+  return (
+    <DefaultLayout
+      header={<Header />}
+      body={<Body />}
+      urlBack={`/${tripId}/expenses`}
+    />
+  );
 }
 
-export default CreateNewTrip;
+export default CreateOrUpdateExpense;

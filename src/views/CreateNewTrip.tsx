@@ -186,7 +186,9 @@ function Body() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline" onClick={() => navigate("/")}>
+              Cancel
+            </Button>
             <Button type="submit">Create</Button>
           </CardFooter>
         </Card>
@@ -195,7 +197,7 @@ function Body() {
   );
 }
 function CreateNewTrip() {
-  return <DefaultLayout header={<Header />} body={<Body />} />;
+  return <DefaultLayout header={<Header />} body={<Body />} urlBack="/" />;
 }
 
 export default CreateNewTrip;

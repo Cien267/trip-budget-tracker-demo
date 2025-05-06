@@ -1,20 +1,13 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMoneyBillWave,
-  faCalendarDays,
-  faPeopleGroup,
-  faMoneyCheckDollar,
-} from "@fortawesome/free-solid-svg-icons";
-import { NavLink } from "react-router";
+import { faMoneyBillWave } from "@fortawesome/free-solid-svg-icons";
 import DefaultLayout from "@/layouts/DefaultLayout";
-import { TripFormType, ExpenseFormType } from "@/types";
-import { format } from "date-fns";
+import { TripFormType } from "@/types";
 import { useParams } from "react-router";
-import { Button } from "@/components/ui/button";
-import { formatVND } from "@/utils";
 import ExpensesSummary from "@/components/expenses/ExpensesSummary";
 import ExpensesList from "@/components/expenses/list/ExpensesList";
+import ExpensesAnalytics from "@/components/expenses/analytics/ExpensesAnalytics";
+import { toast } from "sonner";
 
 function Header() {
   return (
@@ -30,7 +23,7 @@ function TabsSwitcher({
   changeTab,
 }: {
   activeTab: string;
-  changeTab: (tab: any) => void;
+  changeTab: (tab: string) => void;
 }) {
   const tabs = [
     {
@@ -62,16 +55,53 @@ function TabsSwitcher({
 }
 
 function Body() {
-  const trips = JSON.parse(localStorage.getItem("trip-budget-tracker") ?? "[]");
-  let params = useParams();
-  const currentTrip: TripFormType = trips.find(
-    (trip: TripFormType) => trip.id === params.tripId,
-  );
-
-  let totalSpent = 0;
-  currentTrip.expenses?.forEach((expense: ExpenseFormType) => {
-    totalSpent += Number(expense.amount || 0);
+  const [trips, setTrips] = useState<TripFormType[]>(() => {
+    return JSON.parse(localStorage.getItem("trip-budget-tracker") ?? "[]");
   });
+
+  const params = useParams<{ tripId: string }>();
+
+  const currentTrip = useMemo(() => {
+    return (
+      trips.find((trip: TripFormType) => trip.id === params.tripId) || {
+        id: params.tripId || "",
+        name: "Unknown Trip",
+        description: "",
+        date: { from: undefined, to: undefined },
+        participants: "",
+        status: "unknown",
+        expenses: [],
+      }
+    );
+  }, [trips, params.tripId]);
+
+  const totalSpent = useMemo(() => {
+    return (currentTrip.expenses || []).reduce((sum, expense) => {
+      return sum + (Number(expense.amount) || 0);
+    }, 0);
+  }, [currentTrip.expenses]);
+
+  const handleDeleteExpense = (expenseId: string) => {
+    setTrips((prevTrips) => {
+      const updatedTrips = prevTrips.map((trip) => {
+        if (trip.id === params.tripId) {
+          return {
+            ...trip,
+            expenses: (trip.expenses || []).filter(
+              (expense) => expense.id !== expenseId,
+            ),
+          };
+        }
+        return trip;
+      });
+
+      localStorage.setItem("trip-budget-tracker", JSON.stringify(updatedTrips));
+
+      return updatedTrips;
+    });
+
+    toast.success("Expense has been deleted");
+  };
 
   const [activeTab, setActiveTab] = useState("expense-tab");
   return (
@@ -85,15 +115,18 @@ function Body() {
         changeTab={setActiveTab}
       ></TabsSwitcher>
       {activeTab === "expense-tab" ? (
-        <ExpensesList currentTrip={currentTrip}></ExpensesList>
+        <ExpensesList
+          currentTrip={currentTrip}
+          onDeleteExpense={handleDeleteExpense}
+        ></ExpensesList>
       ) : (
-        ""
+        <ExpensesAnalytics currentTrip={currentTrip}></ExpensesAnalytics>
       )}
     </div>
   );
 }
 function ExpenseTracker() {
-  return <DefaultLayout header={<Header />} body={<Body />} />;
+  return <DefaultLayout header={<Header />} body={<Body />} urlBack="/" />;
 }
 
 export default ExpenseTracker;

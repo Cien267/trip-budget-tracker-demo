@@ -2,19 +2,23 @@ import { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";
+import { Toaster } from "@/components/ui/sonner";
 
 function DefaultLayout({
   header,
   body,
   showBackButton = true,
+  urlBack = "",
 }: {
   header: ReactNode;
   body: ReactNode;
   showBackButton?: boolean;
+  urlBack?: string;
 }) {
   let navigate = useNavigate();
   const handleNavigateBack = () => {
-    navigate(-1);
+    if (urlBack) navigate(urlBack);
+    else navigate(-1);
   };
 
   return (
@@ -31,6 +35,7 @@ function DefaultLayout({
         {header}
       </div>
       {body}
+      <Toaster />
     </div>
   );
 }
