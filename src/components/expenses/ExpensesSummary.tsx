@@ -18,7 +18,7 @@ function ExpensesSummary({
   totalSpent: number;
 }) {
   return (
-    <div className="flex flex-col justify-center items-center py-4 px-8 mx-8 border rounded-lg shadow-md min-w-lg sm:min-w-2xl md:min-w-4xl lg:min-w-5xl bg-gradient-to-l from-green-300 to-blue-500 text-white">
+    <div className="flex flex-col justify-center items-center py-4 px-8 mx-1 sm:mx-8 border rounded-lg shadow-md min-w-3xs sm:min-w-xs md:min-w-2xl lg:min-w-4xl bg-gradient-to-l from-green-300 to-blue-500 text-white">
       <div className="flex justify-between items-center w-full">
         <div className="font-black text-2xl text-start">{currentTrip.name}</div>
         <NavLink to={`/${currentTrip.id}/expenses/create`} end>
@@ -42,15 +42,15 @@ function ExpensesSummary({
         <FontAwesomeIcon icon={faPeopleGroup} className="mr-2" />{" "}
         {currentTrip.participants}
       </div>
-      <div className="flex flex-wrap justify-between items-center gap-4 w-full mt-4">
-        <div className="w-[calc(50%-12px)] rounded-lg bg-white/20 backdrop-blur-sm p-4">
+      <div className="flex flex-col sm:flex-row flex-wrap justify-between items-center gap-4 w-full mt-4">
+        <div className="w-full sm:w-[calc(50%-12px)] rounded-lg bg-white/20 backdrop-blur-sm p-4">
           <div className="text-sm font-medium">
             <FontAwesomeIcon icon={faMoneyCheckDollar} className="mr-1" /> Total
             Spent
           </div>
           <div className="text-2xl font-bold mt-2">{formatVND(totalSpent)}</div>
         </div>
-        <div className="w-[calc(50%-12px)] rounded-lg bg-white/20 backdrop-blur-sm p-4">
+        <div className="w-full sm:w-[calc(50%-12px)] rounded-lg bg-white/20 backdrop-blur-sm p-4">
           <div className="text-sm font-medium">
             <FontAwesomeIcon icon={faMoneyCheckDollar} className="mr-1" /> Total
             Logs

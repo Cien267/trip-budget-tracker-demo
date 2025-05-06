@@ -8,7 +8,10 @@ import { format } from "date-fns";
 function Header() {
   return (
     <>
-      <FontAwesomeIcon icon={faPlaneDeparture} className="text-sky-500" />
+      <FontAwesomeIcon
+        icon={faPlaneDeparture}
+        className="text-sky-500 !hidden sm:!block"
+      />
       Trip Expense Tracker
     </>
   );
@@ -60,7 +63,7 @@ function Body() {
           </button>
         </NavLink>
       </div>
-      <div className="flex flex-col gap-4 px-10 pt-4">
+      <div className="flex flex-col gap-4 pt-4">
         <div className="flex flex-col justify-center items-center">
           <div className="font-bold text-emerald-600 text-lg">Recent Trips</div>
           <div className="text-xs font-normal text-gray-400">
@@ -74,7 +77,7 @@ function Body() {
                 <NavLink to={`/${trip.id}/expenses`} end key={trip.id}>
                   <div
                     key={trip.id}
-                    className="border border-emerald-200 rounded-lg flex justify-between items-start p-4 min-w-md hover:shadow-md hover:bg-emerald-50 transition-all cursor-pointer hover:-translate-y-0.5"
+                    className="border border-emerald-200 rounded-lg flex justify-between items-start p-4 min-w-3xs md:min-w-xs lg:min-w-lg hover:shadow-md hover:bg-emerald-50 transition-all cursor-pointer hover:-translate-y-0.5"
                   >
                     <div className="flex flex-col justify-start">
                       <div className="font-bold text-md text-slate-600">

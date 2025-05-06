@@ -167,8 +167,8 @@ function Body() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <Card className="mb-12">
-          <CardContent className="min-w-lg sm:min-w-2xl md:min-w-4xl lg:min-w-5xl">
+        <Card className="mb-12 mx-8">
+          <CardContent className="min-w-xs sm:min-w-2xl md:max-w-4xl lg:max-w-7xl">
             <div className="grid w-full items-center gap-8">
               <div className="flex flex-col space-y-1.5">
                 <FormField
@@ -204,13 +204,13 @@ function Body() {
                         />{" "}
                         Category
                       </FormLabel>
-                      <div className="flex flex-wrap justify-start items-center gap-4">
+                      <div className="flex flex-wrap flex-col sm:flex-row justify-start items-center gap-4">
                         {EXPENSE_CATEGORIES.map((item) => {
                           return (
                             <div
                               onClick={() => handleSelectCategory(item.code)}
                               key={item.code}
-                              className={`flex justify-center items-center flex-col gap-2 border rounded-lg py-4 px-8 cursor-pointer font-semibold hover:shadow-sm min-w-[calc(25%-16px)] ${item.classes} ${selectedCategory === item.code ? item.activeClasses : ""}`}
+                              className={`flex justify-center items-center flex-col gap-2 border rounded-lg py-4 px-8 cursor-pointer font-semibold hover:shadow-sm w-full md:max-w-[calc(25%-16px)] ${item.classes} ${selectedCategory === item.code ? item.activeClasses : ""}`}
                             >
                               <FontAwesomeIcon
                                 icon={item.icon}

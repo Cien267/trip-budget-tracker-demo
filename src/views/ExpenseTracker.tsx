@@ -12,7 +12,10 @@ import { toast } from "sonner";
 function Header() {
   return (
     <>
-      <FontAwesomeIcon icon={faMoneyBillWave} className="text-sky-500" />
+      <FontAwesomeIcon
+        icon={faMoneyBillWave}
+        className="text-sky-500 !hidden sm:!block"
+      />
       Expense Tracker
     </>
   );

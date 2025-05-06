@@ -117,7 +117,7 @@ function ExpensesList({
 
   return (
     <>
-      <div className="flex justify-between items-center gap-8 mt-8">
+      <div className="flex justify-between items-center gap-8 mt-8 mx-8">
         <Input
           type="text"
           placeholder="Search expenses"
@@ -140,43 +140,47 @@ function ExpensesList({
           </SelectContent>
         </Select>
       </div>
-      <div className="min-w-lg sm:min-w-2xl md:min-w-4xl lg:min-w-5xl">
-        {Object.entries(filteredExpenses).map(
-          ([date, { items, totalAmount, totalLogs }]) => (
-            <div className="p-8" key={date}>
-              <div className="flex justify-between items-center pb-8">
-                <div>
-                  <FontAwesomeIcon
-                    icon={faCalendarDays}
-                    className="text-sky-500"
-                  />{" "}
-                  <span className="font-bold text-slate-600 text-lg ml-2">
-                    {format(date, "EEEE, LLL dd, y")}
-                  </span>
+      <div className="min-w-3xs sm:min-w-xs md:min-w-2xl lg:min-w-4xl">
+        {Object.entries(filteredExpenses).length === 0 ? (
+          <div className="w-full text-center p-8 text-slate-400">Empty</div>
+        ) : (
+          Object.entries(filteredExpenses).map(
+            ([date, { items, totalAmount, totalLogs }]) => (
+              <div className="p-4 pt-8 sm:p-8" key={date}>
+                <div className="flex flex-col sm:flex-row justify-between items-center pb-8">
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faCalendarDays}
+                      className="text-sky-500"
+                    />{" "}
+                    <span className="font-bold text-slate-600 text-lg ml-2">
+                      {format(date, "EEEE, LLL dd, y")}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-sm text-slate-400 font-normal">
+                      <b>{totalLogs}</b> expenses{" "}
+                    </span>
+                    <span className="ml-2 font-bold text-lg text-sky-600">
+                      {formatVND(totalAmount)}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-sm text-slate-400 font-normal">
-                    <b>{totalLogs}</b> expenses{" "}
-                  </span>
-                  <span className="ml-2 font-bold text-lg text-sky-600">
-                    {formatVND(totalAmount)}
-                  </span>
+                <div className="flex flex-col sm:flex-row flex-wrap justify-start items-center gap-4">
+                  {items.map((item) => {
+                    return (
+                      <ExpenseCard
+                        expense={item}
+                        onEditExpense={handleEditExpense}
+                        onDeleteExpense={handleDeleteExpense}
+                        key={item.id}
+                      ></ExpenseCard>
+                    );
+                  })}
                 </div>
               </div>
-              <div className="flex flex-wrap justify-start items-center gap-4">
-                {items.map((item) => {
-                  return (
-                    <ExpenseCard
-                      expense={item}
-                      onEditExpense={handleEditExpense}
-                      onDeleteExpense={handleDeleteExpense}
-                      key={item.id}
-                    ></ExpenseCard>
-                  );
-                })}
-              </div>
-            </div>
-          ),
+            ),
+          )
         )}
       </div>
     </>

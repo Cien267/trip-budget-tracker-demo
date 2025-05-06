@@ -53,7 +53,7 @@ function ExpenseCard({
   const [openDialog, setOpenDialog] = useState(false);
 
   return (
-    <div className="min-w-[calc(33%-16px)] max-w-1/3 rounded-lg border bg-card text-card-foreground group overflow-hidden border-none shadow-md transition-all duration-300 hover:shadow-lg">
+    <div className="w-full md:max-w-[calc(33%-16px)] rounded-lg border bg-card text-card-foreground group overflow-hidden border-none shadow-md transition-all duration-300 hover:shadow-lg">
       <div className={`h-1 w-full ${matchingCategory.bgClass}`}></div>
       <div className="p-4">
         <div className="mb-3 flex items-start justify-between">
