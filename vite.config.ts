@@ -11,4 +11,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  base: "/trip-budget-tracker-demo-build/",
+  build: {
+    outDir: "../trip-budget-tracker-demo-build",
+    emptyOutDir: true,
+  },
 });

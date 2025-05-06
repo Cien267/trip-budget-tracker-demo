@@ -75,7 +75,7 @@ function ExpensesAnalytics({ currentTrip }: { currentTrip: TripFormType }) {
     <div className="flex flex-col md:flex-row mt-8">
       <ChartContainer
         config={chartConfig}
-        className="w-full h-96 md:h-auto md:w-1/2"
+        className="h-96 w-96 md:h-auto md:w-1/2"
       >
         <PieChart width={400} height={400}>
           <Pie
